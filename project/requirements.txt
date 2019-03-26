@@ -4,3 +4,4 @@ djangorestframework==3.9.2
 djangorestframework-stubs==0.3.0
 Markdown==3.0.1
 coreapi==2.3.3
+drf-aggregates==0.0.10

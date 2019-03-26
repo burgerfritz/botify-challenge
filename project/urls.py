@@ -9,7 +9,8 @@ from rest_framework.documentation import include_docs_urls
 
 router = routers.DefaultRouter()
 router.register(r'users', viewsets.UserViewSet)
-router.register(r'towns', viewsets.TownViewSet)
+router.register(r'towns', viewsets.TownViewSet, base_name='towns')
+router.register(r'aggs', viewsets.TownAggsViewSet, base_name='aggs')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

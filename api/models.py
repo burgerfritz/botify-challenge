@@ -1,3 +1,5 @@
+from api.managers import TownManager
+
 from django.db import models
 
 
@@ -10,3 +12,5 @@ class Town(models.Model):
     name = models.CharField(max_length=50)
     population = models.PositiveIntegerField()
     average_age = models.FloatField()
+
+    objects = TownManager()
