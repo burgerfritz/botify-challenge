@@ -1,4 +1,7 @@
+from api.models import BQLQueryTown
 from api.models import Town
+from api.utils import validate_fields
+from api.utils import validate_filters
 
 from django.contrib.auth.models import User
 
@@ -43,3 +46,19 @@ class TownSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Town
         fields = ('town',)
+
+
+class BQLQueryTownSerializer(serializers.HyperlinkedModelSerializer):
+    fields = serializers.ListField(
+        child=serializers.CharField(),
+        validators=[validate_fields, ],
+        write_only=True,
+    )
+    filters = serializers.DictField(
+        validators=[validate_filters, ],
+        write_only=True,
+    )
+
+    class Meta:
+        model = BQLQueryTown
+        fields = ('fields', 'filters')

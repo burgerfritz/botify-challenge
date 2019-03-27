@@ -14,3 +14,7 @@ class Town(models.Model):
     average_age = models.FloatField()
 
     objects = TownManager()
+
+
+class BQLQueryTown(models.Model):
+    sqlite_query = models.TextField()

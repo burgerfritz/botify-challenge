@@ -1,9 +1,13 @@
 from api.filters import TownFilter
+from api.models import BQLQueryTown
 from api.models import Town
+from api.serializers import BQLQueryTownSerializer
 from api.serializers import TownSerializer
 from api.serializers import UserSerializer
+from api.utils import build_query
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -56,3 +60,26 @@ class TownAggsViewSet(GenericViewSet, mixins.ListModelMixin):
                 return Response(str(e), status=400)
             return Response(data, content_type=f'application/json')
         return super().list(request, *args, **kwargs)
+
+
+class QueryViewSet(GenericViewSet, mixins.CreateModelMixin):
+    """
+    API endpoint for of transforming a JSON query (in a custom DSL)
+    into a SQLite Query.
+    More information about the custom DSL at:
+    https://developers.botify.com/api/bql/
+    """
+    queryset = BQLQueryTown.objects.all()
+    serializer_class = BQLQueryTownSerializer
+
+    def create(self, request, *args, **kwargs):
+        if 'fields' not in request.data:
+            raise ValidationError(
+                'fields key must be at the root of the DSL query')
+
+        serializer = BQLQueryTownSerializer(data=request.data)
+        if serializer.is_valid():
+            result = build_query(request.data)
+            data = {'query': result}
+            return Response(data)
+        return super().create(request, *args, **kwargs)

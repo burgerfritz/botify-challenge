@@ -11,6 +11,7 @@ router = routers.DefaultRouter()
 router.register(r'users', viewsets.UserViewSet)
 router.register(r'towns', viewsets.TownViewSet, base_name='towns')
 router.register(r'aggs', viewsets.TownAggsViewSet, base_name='aggs')
+router.register(r'query', viewsets.QueryViewSet, base_name='query')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
