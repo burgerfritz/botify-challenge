@@ -29,15 +29,11 @@ In order to retrieve the number of towns for a given department code, call the U
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+In order to run the automated tests locally, run the command:
+``` 
+python manage.py test
 ```
-Give an example
-```
+
 
 ## Documentation
 

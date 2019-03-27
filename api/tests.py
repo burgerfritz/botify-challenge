@@ -7,13 +7,14 @@ from rest_framework.test import APITestCase
 
 
 class TownTests(APITestCase):
-    def test_create_account(self):
+    def test_list_towns(self):
         """
-        Ensure we can create a new account object.
+        Ensure we can only list towns.
         """
-        url = reverse('account-list')
-        data = {'name': 'DabApps'}
+        url = reverse('towns-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = {}
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Account.objects.count(), 1)
-        self.assertEqual(Account.objects.get().name, 'DabApps')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
